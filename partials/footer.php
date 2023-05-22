@@ -10,4 +10,4 @@
     </div> <!-- end of templatemo_footer -->
     
     <div class="cleaner"></div>
-</div> <!-- end of templatemo_footer_wrapper -->
+</div> <!-- end of templatemo_footer_wrapper a-->
