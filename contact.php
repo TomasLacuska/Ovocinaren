@@ -41,25 +41,62 @@
             
             	<h3>Send us a message</h3>
             
+                <?php
+                $dsn = 'mysql:host=localhost;dbname=projekt';
+                $username = 'root';
+                $password = '';
+
+                try {
+                    $pdo = new PDO($dsn, $username, $password);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Check if the form is submitted
+                    if (isset($_POST['submit'])) {
+                        // Get form data
+                        $author = $_POST['author'];
+                        $email = $_POST['email'];
+                        $phone = $_POST['url'];
+                        $message = $_POST['text'];
+                        if(empty($_POST["author"])||empty($_POST["email"]) || empty($_POST["url"]) || empty($_POST["text"])){
+                          echo('Všetky polia musia byť vyplnené');
+                        }else{
+
+                        // Insert the form data into the database
+                        $insertStmt = $pdo->prepare("INSERT INTO kontakt_formular (author, email, phone, message) VALUES (:author, :email, :phone, :message)");
+                        
+                        $insertStmt->execute(['author' => $author, 'email' => $email, 'phone' => $phone, 'message' => $message]);
+
+                        // Display a success message
+                        echo "Form data inserted successfully!";
+                        }
+                    }
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                ?>
+
                 <form method="post" name="contact" action="#">
-                
                     <input type="hidden" name="post" value="Send" />
-                  <label for="author">Name:</label> <input type="text" id="author" name="author" class="required input_field" />
+                    <label for="author">Name:</label>
+                    <input type="text" id="author" name="author" class="required input_field" />
                     <div class="cleaner_h10"></div>
-                    
-                    <label for="email">Email:</label> <input type="text" id="email" name="email" class="validate-email required input_field" />
+
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" class="validate-email required input_field" />
                     <div class="cleaner_h10"></div>
-                    
-                    <label for="url">Phone:</label> <input type="text" name="url" id="url" class="input_field" />
-                  <div class="cleaner_h10"></div>
-                    
-                    <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
+
+                    <label for="url">Phone:</label>
+                    <input type="text" name="url" id="url" class="input_field" />
                     <div class="cleaner_h10"></div>
-                    
+
+                    <label for="text">Message:</label>
+                    <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
+                    <div class="cleaner_h10"></div>
+
                     <input style="font-weight: bold;" type="submit" class="submit_btn" name="submit" id="submit" value=" Send " />
                     <input style="font-weight: bold;" type="reset" class="submit_btn" name="reset" id="reset" value=" Reset " />
-                
-              </form>
+                </form>
+
                 
             </div>
             

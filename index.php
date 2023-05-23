@@ -12,7 +12,6 @@
         <?php include('partials/sidebar.php'); ?>
 
                 <?php
-                // Assuming you have a PDO database connection established
                 $dsn = 'mysql:host=localhost;dbname=projekt';
                 $username = 'root';
                 $password = '';
