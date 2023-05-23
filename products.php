@@ -45,69 +45,46 @@ $(document).ready(function() {
             <p>Morbi sed nulla ac est cursus suscipit eu ac lectus. Curabitur  ullamcorper nibh nisi, sed eleifend dolor. Pellentesque adipiscing  sollicitudin sapien nec aliquet. Cras rutrum ullamcorper metus, vitae  consectetur dolor vulputate a. Sed nec eros egestas nisl tincidunt  aliquet at in est.</p>  
             
             <div class="cleaner_h40"></div>
-            
-            <div class="product_box">
-                            
-                <a href="images/product/01_l.jpg"  class="pirobox"><img src="images/product/01.jpg" alt="image" /></a>
-                
-              <h6>Lorem ipsum dolor sit amet</h6>
-                <p>Etiam et mi et magna molestie iaculis.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                    
-          </div>
-             
-            <div class="product_box">
-                        
-                <a href="images/product/02_l.jpg"  class="pirobox"><img src="images/product/02.jpg" alt="image" /></a>
-                
-                <h6>Curabitur ullamcorper nibh</h6>
-                <p> Vivamus condimentum ligula sit amet lacus.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                
-          </div>
 
-             
-            <div class="product_box">
-                        
-                <a href="images/product/03_l.jpg"  class="pirobox"><img src="images/product/03.jpg" alt="image" /></a>
-                
-                <h6>Senean condimentum ipsum</h6>
-                <p>Class aptent taciti sociosqu ad litora torquent per conubia.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                
-          </div>
-             
-            <div class="product_box">
-                        
-                <a href="images/product/04_l.jpg"  class="pirobox"><img src="images/product/04.jpg" alt="image" /></a>
-                
-                <h6>Nam quis commodo ligula</h6>
-                <p> Phasellus est quam, congue sed laoreet eu, sodales sit.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                
-          </div>
-             
-            <div class="product_box">
-                        
-                <a href="images/product/05_l.jpg"  class="pirobox"><img src="images/product/05.jpg" alt="image" /></a>
-                
-                <h6>Lorem ipsum dolor sit </h6>
-                <p> Duis fermentum sem nec ipsum lacinia fermentum.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                
-          </div>
-             
-            <div class="product_box">
-                        
-                <a href="images/product/06_l.jpg"  class="pirobox"><img src="images/product/06.jpg" alt="image" /></a>
-                
-                <h6>Phasellus est quam</h6>
-                <p> Etiam eu ipsum a arcu sodales consequat sit amet at orci.</p>
-                <div class="button"><a href="#">Detail</a></div>
-                
-          </div>
-        
-           
+              <?php
+               require('inc/config.php');
+               $dsn = 'mysql:host=localhost;dbname=projekt;charset=utf8';
+               $username = 'root';
+               $password = '';
+               $db =  new Database();
+
+              try {
+                  $pdo = new PDO($dsn,$username,$password);
+                  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                  // Prepare and execute a query to fetch the products from the database
+                  $stmt = $pdo->prepare("SELECT * FROM produkty");
+                  $stmt->execute();
+
+                  // fetchnce vsetky produkty
+                  $produkty = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              } catch (PDOException $e) {
+                  echo "Error: " . $e->getMessage();
+              }
+
+              // Prejde cez fetchnuté produkty a zobrazý ich do html
+              foreach ($produkty as $produkt) {
+                  $obrazok = $produkt['obrazok'];
+                  $nazov = $produkt['nazov'];
+                  $popis = $produkt['popis'];
+              ?>
+
+              <div class="product_box">
+                  <a href="<?php echo $obrazok; ?>" class="pirobox"><img src="<?php echo $obrazok; ?>" alt="image" /></a>
+                  <h6><?php echo $nazov; ?></h6>
+                  <p><?php echo $popis; ?></p>
+                  <div class="button"><a href="#">Detail</a></div>
+              </div>
+
+              <?php
+              }
+              ?>
+
             
             
         </div> <!-- end of templatemo_content -->
@@ -124,3 +101,5 @@ $(document).ready(function() {
 Fruit Mix Template 
 http://www.templatemo.com/preview/templatemo_238_fruit_mix 
 -->
+
+
