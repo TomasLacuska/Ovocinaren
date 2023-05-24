@@ -51,13 +51,11 @@ $(document).ready(function() {
                $dsn = 'mysql:host=localhost;dbname=projekt;charset=utf8';
                $username = 'root';
                $password = '';
-               $db =  new Database();
 
               try {
                   $pdo = new PDO($dsn,$username,$password);
                   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                  // Prepare and execute a query to fetch the products from the database
                   $stmt = $pdo->prepare("SELECT * FROM produkty");
                   $stmt->execute();
 

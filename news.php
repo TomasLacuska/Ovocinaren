@@ -22,7 +22,6 @@
 
 
                 <?php
-                // Assuming you have a PDO database connection established
                 $dsn = 'mysql:host=localhost;dbname=projekt';
                 $username = 'root';
                 $password = '';
@@ -31,7 +30,7 @@
                     $pdo = new PDO($dsn, $username, $password);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    // Fetch news items from the database
+                    // Zobere všetky noviny z databázy
                     $novinyStmt = $pdo->prepare("SELECT * FROM noviny");
                     $novinyStmt->execute();
                     $novinyPolozky = $novinyStmt->fetchAll(PDO::FETCH_ASSOC);

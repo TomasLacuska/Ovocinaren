@@ -50,9 +50,9 @@
                     $pdo = new PDO($dsn, $username, $password);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    // Check if the form is submitted
+                    // Pozre či je form zaslaný
                     if (isset($_POST['submit'])) {
-                        // Get form data
+                        // Zísak info  z formu
                         $author = $_POST['author'];
                         $email = $_POST['email'];
                         $phone = $_POST['url'];
@@ -61,13 +61,13 @@
                           echo('Všetky polia musia byť vyplnené');
                         }else{
 
-                        // Insert the form data into the database
+                        // Vloží info do databázy
                         $insertStmt = $pdo->prepare("INSERT INTO kontakt_formular (author, email, phone, message) VALUES (:author, :email, :phone, :message)");
                         
                         $insertStmt->execute(['author' => $author, 'email' => $email, 'phone' => $phone, 'message' => $message]);
 
-                        // Display a success message
-                        echo "Form data inserted successfully!";
+                        // Výpíše śpešnú správu
+                        echo "Úspešne odoslané!";
                         }
                     }
                 } catch (PDOException $e) {
